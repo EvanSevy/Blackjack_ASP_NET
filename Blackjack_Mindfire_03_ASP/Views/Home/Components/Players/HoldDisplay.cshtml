@@ -1,0 +1,17 @@
+﻿@model Player
+
+<div id="@Model.PlayerName" class="col-md-3 hold player" style="display: inline-block; margin: 10px 0px 10px 0px;">
+    <div class="card border-primary" style="background-color:#1C5619">
+        <div class="card-block">
+            <h4 class="card-title text-center text-warning">Player: @Model.PlayerName</h4>
+            <h1 class="card-text text-center text-lg-center text-warning">@Model.DisplayHand()</h1>
+            <div>
+                <button id="@Model.PlayerName" class="hit greenButtons btn btn-primary text-primary" style="background-color: #1C5619; color: yellow;">Hit</button>
+                <button id="@Model.PlayerName" class="hold greenButtons btn btn-primary text-primary">Hold</button>
+            </div>
+            <p class="card-text text-right">
+                <small class="text-warning text-center text-warning" style="margin: 10px;">Hand Value: @Model.ParticipantsHighestHand()</small>
+            </p>
+        </div>
+    </div>
+</div>

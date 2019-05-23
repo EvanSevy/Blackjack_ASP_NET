@@ -1,0 +1,54 @@
+﻿@model UserInterface
+
+<div class="align-items-center" style="background-color:#1C5619; margin: 10px 0px 10px 0px;" align="center">
+    <div class="col-md-4 align-items-center" height="250px" width="250px" style="margin: 25px;">
+        <div class="card border-warning" style="background-color:#1C5619">
+            <div class="card-block">
+                <h4 class="card-title text-center text-warning">Player: @Model.dealer.PlayerName</h4>
+                <h1 class="card-text text-center text-lg-center text-warning"><span>'X' @Model.dealer.Hand[0].DisplayCard()</span></h1>
+            </div>  
+        </div>
+    </div>
+    <h1 id="h1id" class="text-danger">----------------------------Players----------------------------</h1>
+    <div>
+        @for (var i = 0; i < Model.players.Count; i++)
+        {
+            @await Component.InvokeAsync("Players", new { action = "display", playerName = Model.players[i].PlayerName})
+        }
+        @if (ViewBag.AllHoldOrBust == true)
+        {
+            <div style="margin: 25px;"></div>
+            <div class="col-lg-5" style="display: inline-block;">
+                <div class="card border-warning" style="background-color:#1C5619; padding: 25px;">
+                    <div class="card-block">
+                        <h4 class="card-title text-center text-warning">Participants Points: </h4>
+                        <h3 class="card-text text-center text-lg-center text-warning">Player: @Model.dealer.PlayerName got @Model.dealer.Points points</h3>
+                        @foreach (Player player in Model.players)
+                        {
+                            <h3 class="card-text text-center text-lg-center text-warning">
+                                <span>Player: @player.PlayerName got @player.Points point/s</span>
+                            </h3>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5" style="display: inline-block;">
+                <div class="card border-warning" style="background-color:#1C5619; padding: 25px;">
+                    <div class="card-block">
+                        <h4 class="card-title text-center text-warning">Winners: </h4>
+                        @foreach (IParticipant player in ViewBag.winners)
+                        {
+                            <h3 class="card-text text-center text-lg-center text-warning">
+                                <span>Player: @player.PlayerName with @player.Points point/s</span>
+                            </h3>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div></div>
+            <form class="panel-body card-text text-center text-warning" style="margin: 25px;" asp-action="Index" method="get">
+                <button type="submit" class="btn btn-warning greenButtons">Play Again?</button>
+            </form>
+        }
+    </div>
+</div>

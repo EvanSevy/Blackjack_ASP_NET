@@ -1,0 +1,27 @@
+﻿@model AmountPlayers
+
+<script>
+    $(document).ready(function () {
+        $("input[type=text]").click(function (e) {
+            this.select();
+        });
+
+        $("input.input-validation-error").closest(".form-group").addClass("has-error");
+    });
+</script>
+
+<div style="margin: 50px; padding: 25px; text-align: center;">
+    <div class="card border-warning col-4 align-items-center" style="background-color:#1C5619; padding: 25px; display: inline-block;">
+        <div class="card-block">
+            <h4 class="card-title text-center text-warning">Play Mindfire Blackjack?</h4>
+            <form class="panel-body card-text text-center text-warning" asp-action="Index" method="post">
+                <div class="form-group">
+                    <label asp-for="Amt">How many players:</label>
+                    <input asp-for="Amt" class="form-control" type="text" value="Enter an amount under 10" />
+                </div>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <button type="submit" class="btn btn-warning greenButtons">Start Game</button>
+            </form>
+        </div>
+    </div>
+</div>

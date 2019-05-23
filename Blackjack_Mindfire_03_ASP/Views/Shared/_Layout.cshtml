@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/bootstrap.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <title>Mindfire Blackjack</title>
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', 'button.hit', function (e) {
+                e.preventDefault();
+                var thisPlayer = this.id;
+                $.post('/home/GetHitHold/', { action: "hit", playerName: this.id },
+                    function (returnedData) {
+                        $('div[id~="' + thisPlayer + '"]').replaceWith(returnedData);
+                        allHoldBust();
+                    }).fail(function () {
+                        addTableRow("error");
+                    });
+            });
+            $(document).on('click', 'button.hold', function (e) {
+                e.preventDefault();
+                var thisPlayer = this.id;
+                $.post('/home/GetHitHold/', { action: "hold", playerName: this.id },
+                    function (returnedData) {
+                        $('div[id~="' + thisPlayer + '"]').replaceWith(returnedData);
+                        allHoldBust();
+                    }).fail(function () {
+                        addTableRow("error");
+                    });
+            });
+        });
+        var addTableRow = function (reservation) {
+            $("#test").append("<h6>" + reservation + "</h6>");
+        }
+        var allHoldBust = function () {
+            var amtHoldBust = 0;
+            var amtPlayers = 0;
+            amtHoldBust += $("div.hold").length
+            amtHoldBust += $("div.bust").length;
+            amtPlayers = $("div.player").length;
+            if (amtHoldBust == amtPlayers) {
+                window.location.href = '/Home/Final/';
+            }
+        }
+    </script>
+    <style>
+        .greenButtons {
+            background-color: #1C5619;
+            color: yellow;
+        }
+    </style>
+</head>
+<body style="background-color:#1C5619">
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
